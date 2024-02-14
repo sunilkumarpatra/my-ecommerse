@@ -55,6 +55,10 @@
                             <a href="{{url('admin/color')}}">
                                 <i class="fas fa-circle"></i>Color</a>
                         </li>
+                        <li class="@yield('product_select')">
+                            <a href="{{url('admin/product')}}">
+                            <i class="fas fa-th-large"></i>Product</a>
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -90,6 +94,10 @@
                         <li class="@yield('color_select')">
                             <a href="{{url('admin/color')}}">
                                 <i class="fas fa-circle"></i>Color</a>
+                        </li>
+                        <li class="@yield('product_select')">
+                            <a href="{{url('admin/product')}}">
+                            <i class="fas fa-th-large"></i>Product</a>
                         </li>
                     </ul>
                 </nav>
