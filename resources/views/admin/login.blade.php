@@ -24,10 +24,10 @@
                 <div class="login-wrap">
                     <div class="login-content">
                         <div class="login-logo">
-                            {{ Config::get('constants.SITE_NAME') }}
-                            {{-- <a href="#">
-                                <img src="{{asset('admin_assets/images/icon/logo.png')}}" alt="CoolAdmin">
-                            </a> --}}
+                            {{-- {{ Config::get('constants.SITE_NAME') }} --}}
+                            <a href="#">
+                                <img src="{{asset('admin_assets/images/icon/myecom_logo.png')}}" alt="My Ecom" width="150px" height="70px">
+                            </a>
                         </div>
                         <div class="login-form">
                             <form action="{{ route('admin.auth') }}" method="post">

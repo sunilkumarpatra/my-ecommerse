@@ -35,10 +35,9 @@
                                 <td>{{ $list->slug }}</td>
                                 <td>
                                     @if ($list->image != '')
-                                        <img width="100px" src="{{ asset('storage/media/' . $list->image) }}" />
+                                        <img width="50px" height="30px" src="{{ asset('storage/media/' . $list->image) }}" />
                                     @endif
                                 </td>
-                                
                                 <td>
                                     <a href="{{url('admin/product/manage_product/')}}/{{$list->id}}"><button type="button"
                                         class="btn btn-outline-success btn-sm">Edit</button></a>
@@ -52,8 +51,7 @@
                                                 type="button"
                                                 class="btn btn-outline-secondary btn-sm">Deactive</button></a>
                                     @endif
-
-                                </td>
+                                 </td>
                             </tr>
                         @endforeach
                     </tbody>

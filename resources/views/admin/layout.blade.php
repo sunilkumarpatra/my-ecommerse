@@ -20,8 +20,8 @@
             <div class="header-mobile__bar">
                 <div class="container-fluid">
                     <div class="header-mobile-inner">
-                        <a class="logo" href="index.html">
-                            <img src="{{asset('admin_assets/images/icon/logo.png')}}" alt="CoolAdmin" />
+                        <a href="#">
+                            <img src="{{asset('admin_assets/images/icon/myecom_logo.png')}}" alt="My Ecom" width="120px" height="50px">
                         </a>
                         <button class="hamburger hamburger--slider" type="button">
                             <span class="hamburger-box">
@@ -51,6 +51,10 @@
                             <a href="{{url('admin/size')}}">
                                 <i class="fas fa-plus"></i>Size</a>
                         </li>
+                        <li class="@yield('brand_select')">
+                            <a href="{{url('admin/brand')}}">
+                            <i class="fa fa-quote-left"></i>Brand</a>
+                        </li>
                         <li class="@yield('color_select')">
                             <a href="{{url('admin/color')}}">
                                 <i class="fas fa-circle"></i>Color</a>
@@ -59,6 +63,7 @@
                             <a href="{{url('admin/product')}}">
                             <i class="fas fa-th-large"></i>Product</a>
                         </li>
+                        
                     </ul>
                 </div>
             </nav>
@@ -69,7 +74,7 @@
         <aside class="menu-sidebar d-none d-lg-block">
             <div class="logo">
                 <a href="#">
-                    <img src="{{asset('admin_assets/images/icon/logo.png')}}" alt="Cool Admin" />
+                    <img src="{{asset('admin_assets/images/icon/myecom_logo.png')}}" alt="My Ecom" width="120px" height="50px">
                 </a>
             </div>
             <div class="menu-sidebar__content js-scrollbar1">
@@ -91,6 +96,10 @@
                             <a href="{{url('admin/size')}}">
                                 <i class="fas fa-plus"></i>Size</a>
                         </li>
+                        <li class="@yield('brand_select')">
+                            <a href="{{url('admin/brand')}}">
+                            <i class="fa fa-quote-left"></i>Brand</a>
+                        </li>
                         <li class="@yield('color_select')">
                             <a href="{{url('admin/color')}}">
                                 <i class="fas fa-circle"></i>Color</a>
@@ -99,6 +108,7 @@
                             <a href="{{url('admin/product')}}">
                             <i class="fas fa-th-large"></i>Product</a>
                         </li>
+                        
                     </ul>
                 </nav>
             </div>
@@ -164,5 +174,7 @@
     <script src="{{asset('admin_assets/vendor/bootstrap-4.1/bootstrap.min.js')}}"></script>
     <script src="{{asset('admin_assets/vendor/wow/wow.min.js')}}"></script>
     <script src="{{asset('admin_assets/js/main.js')}}"></script>
+    <script src="{{asset('admin_assets/ckeditor/ckeditor.js')}}">
+
 </body>
 </html>
