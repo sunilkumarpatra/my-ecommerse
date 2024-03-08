@@ -152,168 +152,225 @@
                                     <textarea id="warranty" name="warranty" type="text" class="form-control" aria-required="true"
                                         aria-invalid="false" required>{{ $warranty }}</textarea>
                                 </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label for="lead_time" class="control-label mb-1"> Lead Time</label>
+                                            <input id="lead_time" value="{{ $lead_time }}" name="lead_time"
+                                                type="text" class="form-control" aria-required="true"
+                                                aria-invalid="false">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="tax" class="control-label mb-1"> Tax</label>
+                                            <input id="tax" value="{{ $tax }}" name="tax"
+                                                type="text" class="form-control" aria-required="true"
+                                                aria-invalid="false" required>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="tax_type" class="control-label mb-1"> Tax Type</label>
+                                            <input id="tax_type" value="{{ $tax_type }}" name="tax_type"
+                                                type="text" class="form-control" aria-required="true"
+                                                aria-invalid="false" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label for="is_promo" class="control-label mb-1"> Is Promo</label>
+                                            <select class="form-control" name="is_promo" id="is_promo">
+                                                <option value="1">Yes</option>
+                                                <option value="0">No</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="is_featured" class="control-label mb-1"> Is Featured</label>
+                                            <select class="form-control" name="is_featured" id="is_featured">
+                                                <option value="1">Yes</option>
+                                                <option value="0">No</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="is_discounted" class="control-label mb-1"> Is Discounted</label>
+                                            <select class="form-control" name="is_discounted" id="is_discounted">
+                                                <option value="1">Yes</option>
+                                                <option value="0">No</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="is_tranding" class="control-label mb-1"> Is Tranding</label>
+                                            <select class="form-control" name="is_tranding" id="is_tranding">
+                                                <option value="1">Yes</option>
+                                                <option value="0">No</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
+
                         </div>
                     </div>
-                    <h2 class="mb10 ml15">Product Images</h2>
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <div class="row" id="product_images_box">
+                </div>
+                <h2 class="mb10 ml15">Product Images</h2>
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <div class="row" id="product_images_box">
+                                    @php
+                                        $loop_count_num = 1;
+                                    @endphp
+                                    @foreach ($productImagesArr as $key => $val)
                                         @php
-                                            $loop_count_num = 1;
+                                            $loop_count_prev = $loop_count_num;
+                                            $pIArr = (array) $val;
                                         @endphp
-                                        @foreach ($productImagesArr as $key => $val)
-                                            @php
-                                                $loop_count_prev = $loop_count_num;
-                                                $pIArr = (array) $val;
-                                            @endphp
-                                            <input id="piid" type="hidden" name="piid[]"
-                                                value="{{ $pIArr['id'] }}">
-                                            <div class="col-md-4 product_images_{{ $loop_count_num++ }}">
-                                                <label for="images" class="control-label mb-1"> Image</label>
-                                                <input id="images" name="images[]" type="file"
-                                                    class="form-control" aria-required="true" aria-invalid="false">
+                                        <input id="piid" type="hidden" name="piid[]"
+                                            value="{{ $pIArr['id'] }}">
+                                        <div class="col-md-4 product_images_{{ $loop_count_num++ }}">
+                                            <label for="images" class="control-label mb-1"> Image</label>
+                                            <input id="images" name="images[]" type="file" class="form-control"
+                                                aria-required="true" aria-invalid="false">
 
-                                                @if ($pIArr['images'] != '')
-                                                    <a href="{{ asset('storage/media/' . $pIArr['images']) }}"
-                                                        target="_blank"><img width="100px"
-                                                            src="{{ asset('storage/media/' . $pIArr['images']) }}" /></a>
-                                                @endif
-                                            </div>
+                                            @if ($pIArr['images'] != '')
+                                                <a href="{{ asset('storage/media/' . $pIArr['images']) }}"
+                                                    target="_blank"><img width="100px"
+                                                        src="{{ asset('storage/media/' . $pIArr['images']) }}" /></a>
+                                            @endif
+                                        </div>
 
-                                            <div class="col-md-2">
-                                                <label for="images" class="control-label mb-1">
-                                                    &nbsp;&nbsp;&nbsp;</label>
+                                        <div class="col-md-2">
+                                            <label for="images" class="control-label mb-1">
+                                                &nbsp;&nbsp;&nbsp;</label>
 
-                                                @if ($loop_count_num == 2)
-                                                    <button type="button" class="btn btn-success btn-lg"
-                                                        onclick="add_image_more()">
-                                                        <i class="fa fa-plus"></i>&nbsp; Add</button>
-                                                @else
-                                                    <a
-                                                        href="{{ url('admin/product/product_images_delete/') }}/{{ $pIArr['id'] }}/{{ $id }}"><button
-                                                            type="button" class="btn btn-danger btn-lg">
-                                                            <i class="fa fa-minus"></i>&nbsp; Remove</button></a>
-                                                @endif
-                                            </div>
-                                        @endforeach
-                                    </div>
+                                            @if ($loop_count_num == 2)
+                                                <button type="button" class="btn btn-success btn-lg"
+                                                    onclick="add_image_more()">
+                                                    <i class="fa fa-plus"></i>&nbsp; Add</button>
+                                            @else
+                                                <a
+                                                    href="{{ url('admin/product/product_images_delete/') }}/{{ $pIArr['id'] }}/{{ $id }}"><button
+                                                        type="button" class="btn btn-danger btn-lg">
+                                                        <i class="fa fa-minus"></i>&nbsp; Remove</button></a>
+                                            @endif
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <h2 class="mb10 ml15">Product Attributes</h2>
-                    <div class="col-lg-12" id="product_attr_box">
+                </div>
+                <h2 class="mb10 ml15">Product Attributes</h2>
+                <div class="col-lg-12" id="product_attr_box">
+                    @php
+                        $loop_count_num = 1;
+                    @endphp
+                    @foreach ($productAttrArr as $key => $val)
                         @php
-                            $loop_count_num = 1;
+                            $loop_count_prev = $loop_count_num;
+                            $pAArr = (array) $val;
                         @endphp
-                        @foreach ($productAttrArr as $key => $val)
-                            @php
-                                $loop_count_prev = $loop_count_num;
-                                $pAArr = (array) $val;
-                            @endphp
-                            <input id="paid" type="hidden" name="paid[]" value="{{ $pAArr['id'] }}">
-                            <div class="card" id="product_attr_{{ $loop_count_num++ }}">
-                                <div class="card-body">
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <label for="sku" class="control-label mb-1"> SKU</label>
-                                                <input id="sku" name="sku[]" type="text" class="form-control"
-                                                    aria-required="true" aria-invalid="false"
-                                                    value="{{ $pAArr['sku'] }}" required>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label for="mrp" class="control-label mb-1"> MRP</label>
-                                                <input id="mrp" name="mrp[]" type="text" class="form-control"
-                                                    aria-required="true" aria-invalid="false"
-                                                    value="{{ $pAArr['mrp'] }}" required>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label for="price" class="control-label mb-1"> Price</label>
-                                                <input id="price" name="price[]" type="text" class="form-control"
-                                                    aria-required="true" aria-invalid="false"
-                                                    value="{{ $pAArr['price'] }}" required>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label for="size_id" class="control-label mb-1"> Size</label>
-                                                <select id="size_id" name="size_id[]" class="form-control">
-                                                    <option value="">Select</option>
-                                                    @foreach ($sizes as $list)
-                                                        @if ($pAArr['size_id'] == $list->id)
-                                                            <option value="{{ $list->id }}" selected>
-                                                                {{ $list->size }}</option>
-                                                        @else
-                                                            <option value="{{ $list->id }}">{{ $list->size }}
-                                                            </option>
-                                                        @endif
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label for="color_id" class="control-label mb-1"> Color</label>
-                                                <select id="color_id" name="color_id[]" class="form-control">
-                                                    <option value="">Select</option>
-                                                    @foreach ($colors as $list)
-                                                        @if ($pAArr['size_id'] == $list->id)
-                                                            <option value="{{ $list->id }}" selected>
-                                                                {{ $list->color }}</option>
-                                                        @else
-                                                            <option value="{{ $list->id }}">{{ $list->color }}
-                                                            </option>
-                                                        @endif
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label for="qty" class="control-label mb-1"> Qty</label>
-                                                <input id="qty" name="qty[]" type="text" class="form-control"
-                                                    aria-required="true" aria-invalid="false"
-                                                    value="{{ $pAArr['qty'] }}" required>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <label for="attr_image" class="control-label mb-1"> Image</label>
-                                                <input id="attr_image" name="attr_image[]" type="file"
-                                                    class="form-control" aria-required="true" aria-invalid="false">
+                        <input id="paid" type="hidden" name="paid[]" value="{{ $pAArr['id'] }}">
+                        <div class="card" id="product_attr_{{ $loop_count_num++ }}">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <label for="sku" class="control-label mb-1"> SKU</label>
+                                            <input id="sku" name="sku[]" type="text" class="form-control"
+                                                aria-required="true" aria-invalid="false" value="{{ $pAArr['sku'] }}"
+                                                required>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label for="mrp" class="control-label mb-1"> MRP</label>
+                                            <input id="mrp" name="mrp[]" type="text" class="form-control"
+                                                aria-required="true" aria-invalid="false" value="{{ $pAArr['mrp'] }}"
+                                                required>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label for="price" class="control-label mb-1"> Price</label>
+                                            <input id="price" name="price[]" type="text" class="form-control"
+                                                aria-required="true" aria-invalid="false" value="{{ $pAArr['price'] }}"
+                                                required>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="size_id" class="control-label mb-1"> Size</label>
+                                            <select id="size_id" name="size_id[]" class="form-control">
+                                                <option value="">Select</option>
+                                                @foreach ($sizes as $list)
+                                                    @if ($pAArr['size_id'] == $list->id)
+                                                        <option value="{{ $list->id }}" selected>
+                                                            {{ $list->size }}</option>
+                                                    @else
+                                                        <option value="{{ $list->id }}">{{ $list->size }}
+                                                        </option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="color_id" class="control-label mb-1"> Color</label>
+                                            <select id="color_id" name="color_id[]" class="form-control">
+                                                <option value="">Select</option>
+                                                @foreach ($colors as $list)
+                                                    @if ($pAArr['size_id'] == $list->id)
+                                                        <option value="{{ $list->id }}" selected>
+                                                            {{ $list->color }}</option>
+                                                    @else
+                                                        <option value="{{ $list->id }}">{{ $list->color }}
+                                                        </option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label for="qty" class="control-label mb-1"> Qty</label>
+                                            <input id="qty" name="qty[]" type="text" class="form-control"
+                                                aria-required="true" aria-invalid="false" value="{{ $pAArr['qty'] }}"
+                                                required>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="attr_image" class="control-label mb-1"> Image</label>
+                                            <input id="attr_image" name="attr_image[]" type="file"
+                                                class="form-control" aria-required="true" aria-invalid="false">
 
-                                                @if ($pAArr['attr_image'] != '')
-                                                    <img width="100px"
-                                                        src="{{ asset('storage/media/' . $pAArr['attr_image']) }}" />
-                                                @endif
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label for="attr_image" class="control-label mb-1">
-                                                    &nbsp;&nbsp;&nbsp;</label>
+                                            @if ($pAArr['attr_image'] != '')
+                                                <img width="100px"
+                                                    src="{{ asset('storage/media/' . $pAArr['attr_image']) }}" />
+                                            @endif
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label for="attr_image" class="control-label mb-1">
+                                                &nbsp;&nbsp;&nbsp;</label>
 
-                                                @if ($loop_count_num == 2)
-                                                    <button type="button" class="btn btn-success btn-lg"
-                                                        onclick="add_more()">
-                                                        <i class="fa fa-plus"></i>&nbsp; Add</button>
-                                                @else
-                                                    <a
-                                                        href="{{ url('admin/product/product_attr_delete/') }}/{{ $pAArr['id'] }}/{{ $id }}"><button
-                                                            type="button" class="btn btn-danger btn-lg">
-                                                            <i class="fa fa-minus"></i>&nbsp; Remove</button></a>
-                                                @endif
+                                            @if ($loop_count_num == 2)
+                                                <button type="button" class="btn btn-success btn-lg"
+                                                    onclick="add_more()">
+                                                    <i class="fa fa-plus"></i>&nbsp; Add</button>
+                                            @else
+                                                <a
+                                                    href="{{ url('admin/product/product_attr_delete/') }}/{{ $pAArr['id'] }}/{{ $id }}"><button
+                                                        type="button" class="btn btn-danger btn-lg">
+                                                        <i class="fa fa-minus"></i>&nbsp; Remove</button></a>
+                                            @endif
 
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
-                    </div>
+                        </div>
+                    @endforeach
                 </div>
-                <div>
-                    <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
-                        Submit
-                    </button>
-                </div>
-                <input type="hidden" name="id" value="{{ $id }}" />
-            </form>
         </div>
+        <div>
+            <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
+                Submit
+            </button>
+        </div>
+        <input type="hidden" name="id" value="{{ $id }}" />
+        </form>
+    </div>
     </div>
     <script>
         var loop_count = 1;
