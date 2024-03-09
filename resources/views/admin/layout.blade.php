@@ -59,10 +59,19 @@
                             <a href="{{url('admin/color')}}">
                                 <i class="fas fa-circle"></i>Color</a>
                         </li>
+                        <li class="@yield('tax_select')">
+                            <a href="{{url('admin/tax')}}">
+                            <i class="fas fa-th-inr"></i>Tax</a>
+                        </li>
                         <li class="@yield('product_select')">
                             <a href="{{url('admin/product')}}">
                             <i class="fas fa-th-large"></i>Product</a>
                         </li>
+                        <li class="@yield('customer_select')">
+                            <a href="{{url('admin/customer')}}">
+                            <i class="fas fa-users"></i>Customer</a>
+                        </li>
+
                         
                     </ul>
                 </div>
@@ -104,9 +113,17 @@
                             <a href="{{url('admin/color')}}">
                                 <i class="fas fa-circle"></i>Color</a>
                         </li>
+                        <li class="@yield('tax_select')">
+                            <a href="{{url('admin/tax')}}">
+                            <i class="fas fa-inr"></i>Tax</a>
+                        </li>
                         <li class="@yield('product_select')">
                             <a href="{{url('admin/product')}}">
                             <i class="fas fa-th-large"></i>Product</a>
+                        </li>
+                        <li class="@yield('customer_select')">
+                            <a href="{{url('admin/customer')}}">
+                            <i class="fas fa-users"></i>Customer</a>
                         </li>
                         
                     </ul>

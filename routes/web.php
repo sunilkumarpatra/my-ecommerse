@@ -7,6 +7,9 @@ use App\Http\Controllers\SizeController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\TaxController;
+use App\Http\Controllers\CustomerController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +64,21 @@ Route::group(['middleware'=>'admin_auth'],function(){
     Route::get('admin/color/delete/{id}',[ColorController::class,'delete']);
     Route::get('admin/color/status/{status}/{id}',[ColorController::class,'status']);
 
+    //Brand Routes
+    Route::get('admin/brand',[BrandController::class,'index']);
+    Route::get('admin/brand/manage_brand',[BrandController::class,'manage_brand']);
+    Route::post('admin/brand/manage_brand_process',[BrandController::class,'manage_brand_process'])->name('brand.manage_brand_process');
+    Route::get('admin/brand/manage_brand/{id}',[BrandController::class,'manage_brand']);
+    Route::get('admin/brand/delete/{id}',[BrandController::class,'delete']);
+    Route::get('admin/brand/status/{status}/{id}',[BrandController::class,'status']);
+
+    //Tax Routes
+    Route::get('admin/tax',[TaxController::class,'index']);
+    Route::get('admin/tax/manage_tax',[TaxController::class,'manage_tax']);
+    Route::get('admin/tax/manage_tax/{id}',[TaxController::class,'manage_tax']);
+    Route::post('admin/tax/manage_tax_process',[TaxController::class,'manage_tax_process'])->name('tax.manage_tax_process');
+    Route::get('admin/tax/delete/{id}',[TaxController::class,'delete']);
+    Route::get('admin/tax/status/{status}/{id}',[TaxController::class,'status']);
     //Product Routes
     Route::get('admin/product',[ProductController::class,'index']);
     Route::get('admin/product/manage_product',[ProductController::class,'manage_product']);
@@ -70,13 +88,11 @@ Route::group(['middleware'=>'admin_auth'],function(){
     Route::get('admin/product/status/{status}/{id}',[ProductController::class,'status']);
     Route::get('admin/product/product_attr_delete/{paid}/{pid}',[ProductController::class,'product_attr_delete']);
     Route::get('admin/product/product_images_delete/{paid}/{pid}',[ProductController::class,'product_images_delete']);
-    //Brand Routes
-    Route::get('admin/brand',[BrandController::class,'index']);
-    Route::get('admin/brand/manage_brand',[BrandController::class,'manage_brand']);
-    Route::post('admin/brand/manage_brand_process',[BrandController::class,'manage_brand_process'])->name('brand.manage_brand_process');
-    Route::get('admin/brand/manage_brand/{id}',[BrandController::class,'manage_brand']);
-    Route::get('admin/brand/delete/{id}',[BrandController::class,'delete']);
-    Route::get('admin/brand/status/{status}/{id}',[BrandController::class,'status']);
+    
+    //Customer Routes
+    Route::get('admin/customer',[CustomerController::class,'index']);
+    Route::get('admin/customer/show/{id}',[CustomerController::class,'show']);
+    Route::get('admin/customer/status/{status}/{id}',[CustomerController::class,'status']);
 
     //Logout route
     Route::get('/admin/logout', function () {

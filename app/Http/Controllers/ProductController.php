@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+
 
 class ProductController extends Controller
 {
@@ -33,8 +35,7 @@ class ProductController extends Controller
             $result['uses']=$arr['0']->uses;
             $result['warranty']=$arr['0']->warranty;
             $result['lead_time']=$arr['0']->lead_time;
-            $result['tax']=$arr['0']->tax;
-            $result['tax_type']=$arr['0']->tax_type;
+            $result['tax_id']=$arr['0']->tax_id;
             $result['is_promo']=$arr['0']->is_promo;
             $result['is_featured']=$arr['0']->is_featured;
             $result['is_discounted']=$arr['0']->is_discounted;
@@ -67,8 +68,7 @@ class ProductController extends Controller
             $result['uses']='';
             $result['warranty']='';
             $result['lead_time']='';
-            $result['tax']='';
-            $result['tax_type']='';
+            $result['tax_id']='';
             $result['is_promo']='';
             $result['is_featured']='';
             $result['is_discounted']='';
@@ -102,6 +102,8 @@ class ProductController extends Controller
         $result['colors']=DB::table('colors')->where(['status'=>1])->get();
 
         $result['brands']=DB::table('brands')->where(['status'=>1])->get();
+
+        $result['taxs']=DB::table('taxs')->where(['status'=>1])->get();
         return view('admin/manage_product',$result);
     }
 
@@ -152,6 +154,12 @@ class ProductController extends Controller
         }
 
         if($request->hasfile('image')){
+            if($request->post('id')>0){                
+                $arrImage=DB::table('products')->where(['id'=>$request->post('id')])->get();
+                if(Storage::exists('/public/media/'.$arrImage[0]->image)){
+                    Storage::delete('/public/media/'.$arrImage[0]->image);
+                }
+            }
             $image=$request->file('image');
             $ext=$image->extension();
             $image_name=time().'.'.$ext;
@@ -171,8 +179,7 @@ class ProductController extends Controller
         $model->uses=$request->post('uses');
         $model->warranty=$request->post('warranty');
         $model->lead_time=$request->post('lead_time');
-        $model->tax=$request->post('tax');
-        $model->tax_type=$request->post('tax_type');
+        $model->tax_id=$request->post('tax_id');
         $model->is_promo=$request->post('is_promo');
         $model->is_featured=$request->post('is_featured');
         $model->is_discounted=$request->post('is_discounted');
@@ -182,6 +189,7 @@ class ProductController extends Controller
         $pid=$model->id;
         /*Product Attr Start*/ 
         foreach($skuArr as $key=>$val){
+            $productAttrArr=[];
             $productAttrArr['products_id']=$pid;
             $productAttrArr['sku']=$skuArr[$key];
             $productAttrArr['mrp']=(int)$mrpArr[$key];
@@ -198,8 +206,14 @@ class ProductController extends Controller
             }else{
                 $productAttrArr['color_id']=$color_idArr[$key];
             }
-            
             if($request->hasFile("attr_image.$key")){
+                if($paidArr[$key]!=''){ 
+                    $arrImage=DB::table('products_attr')->where(['id'=>$paidArr[$key]])->get();
+                    if(Storage::exists('/public/media/'.$arrImage[0]->attr_image)){
+                        Storage::delete('/public/media/'.$arrImage[0]->attr_image);
+                    }
+                }
+
                 $rand=rand('111111111','999999999');
                 $attr_image=$request->file("attr_image.$key");
                 $ext=$attr_image->extension();
@@ -222,6 +236,14 @@ class ProductController extends Controller
         foreach($piidArr as $key=>$val){
             $productImageArr['products_id']=$pid;
             if($request->hasFile("images.$key")){
+
+                if($piidArr[$key]!=''){ 
+                    $arrImage=DB::table('product_images')->where(['id'=>$piidArr[$key]])->get();
+                    if(Storage::exists('/public/media/'.$arrImage[0]->images)){
+                        Storage::delete('/public/media/'.$arrImage[0]->images);
+                    }
+                }
+
                 $rand=rand('111111111','999999999');
                 $images=$request->file("images.$key");
                 $ext=$images->extension();
@@ -253,11 +275,20 @@ class ProductController extends Controller
     }
 
     public function product_attr_delete(Request $request,$paid,$pid){
+        $arrImage=DB::table('products_attr')->where(['id'=>$paid])->get();
+        if(Storage::exists('/public/media/'.$arrImage[0]->attr_image))
+        {
+            Storage::delete('/public/media/'.$arrImage[0]->attr_image);
+        }
         DB::table('products_attr')->where(['id'=>$paid])->delete();
         return redirect('admin/product/manage_product/'.$pid);
     }
 
     public function product_images_delete(Request $request,$paid,$pid){
+        $arrImage=DB::table('product_images')->where(['id'=>$paid])->get();
+        if(Storage::exists('/public/media/'.$arrImage[0]->images)){
+            Storage::delete('/public/media/'.$arrImage[0]->images);
+        }
         DB::table('product_images')->where(['id'=>$paid])->delete();
         return redirect('admin/product/manage_product/'.$pid);
     }
