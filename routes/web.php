@@ -9,7 +9,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\TaxController;
 use App\Http\Controllers\CustomerController;
-
+use App\Http\Controllers\Front\FrontController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,9 +22,7 @@ use App\Http\Controllers\CustomerController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/',[FrontController::class,'index']);
 Route::get('admin',[AdminController::class,'index']);
 Route::post('admin/auth',[AdminController::class,'auth'])->name('admin.auth');
 //Route::get('admin/updatepassword',[AdminController::class,'updatepassword']);
