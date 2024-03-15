@@ -27,6 +27,7 @@ class AdminController extends Controller
 
     public function auth(Request $request)
     {
+        //echo "Auth"; die();
         $email=$request->post('email');
         $password=$request->post('password');
 
